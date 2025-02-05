@@ -1,0 +1,141 @@
+/* Стили для контейнера календаря */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+}
+
+#calendar {
+  width: 100%;
+  max-width: 800px; /* Максимальная ширина календаря */
+  background-color: #fff; /* Белый фон для календаря */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  padding: 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+/* Заголовок календаря */
+.fc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fc-toolbar-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff66b2; /* Розовый акцент для заголовка */
+}
+
+.fc-button {
+  background-color: #ff66b2; /* Розовые кнопки */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fc-button:hover {
+  background-color: #ff3385; /* Более насыщенный розовый при наведении */
+}
+
+.fc-button:focus {
+  outline: none;
+}
+
+/* Стиль дней в календаре */
+.fc-daygrid-day {
+  background-color: #fbe8f7; /* Светло-розовый фон */
+  border: 1px solid #f5b2d1; /* Розовая рамка */
+}
+
+.fc-daygrid-day:hover {
+  background-color: #fff; /* Белый фон при наведении */
+}
+
+/* Стили для заголовков дней недели */
+.fc-col-header-cell {
+  background-color: #ff66b2; /* Розовый фон */
+  color: white; /* Белый текст */
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Стили для событий */
+.fc-event {
+  background-color: #ff66b2; /* Розовый фон события */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.fc-event:hover {
+  background-color: #ff3385; /* Более насыщенный розовый при наведении */
+  cursor: pointer;
+}
+
+/* Стили для текущего дня */
+.fc-day-today {
+  background-color: #fff5fa; /* Акцент на текущем дне */
+  border: 2px solid #ff66b2; /* Яркая розовая рамка */
+}
+
+/* Стиль для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.modal.active {
+    display: block;
+}
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+.modal-overlay.active {
+    display: block;
+}
+
+/* Ссылка на профиль */
+.profile-link {
+    font-size: 1.2rem;
+    color: #ff66b2; /* Розовый цвет для ссылки */
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px;
+}
+
+.profile-link:hover {
+    color: #ff3385; /* Темно-розовый при наведении */
+    text-decoration: underline;
+}

@@ -1,0 +1,14 @@
+<form method="POST">
+  <div class="container">
+      <h2>Добавление события</h2>
+        <label for="group_id">ID группы:</label>
+        <input type="number" id="group_id" name="group_id" required>
+        <label for="event_name">Название события:</label>
+        <input type="text" id="event_name" name="event_name" required>
+        <label for="event_date">Дата события:</label>
+        <input type="date" id="event_date" name="event_date" required>
+        <button type="submit">Добавить</button>
+  </div>
+</form>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_event.css') }}">

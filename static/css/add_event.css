@@ -1,0 +1,103 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Стили формы */
+form {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Контейнер для содержимого формы */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Заголовок формы */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Стили для инпутов */
+input[type="text"], input[type="number"],input[type="date"]{
+  width: 100%;
+  padding: 14px 18px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #f5b2d1; /* Легкий розовый оттенок для рамки */
+  font-size: 16px;
+  color: #333;
+  background-color: #fbe8f7; /* Светлый розовый фон для input */
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="number"]:focus{
+  border-color: #ff66b2; /* Розовый акцент при фокусе */
+  background-color: #fff; /* Белый фон при фокусе */
+  outline: none;
+}
+
+/* Стили для кнопки */
+button {
+  background-color: #ff66b2; /* Розовый фон для кнопки */
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #ff3385; /* Темнее розовый при наведении */
+}
+
+/* Дополнительные стили для кнопки при фокусе */
+button:focus {
+  outline: none;
+}
+
+/* Стили для лейблов */
+label {
+  font-size: 14px;
+  color: #000; /* Черный цвет для текста лейблов */
+  align-self: flex-start;
+  margin-bottom: 6px;
+}
+
+/* Стили для ссылки на регистрацию */
+.container-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.container-link a {
+  color: #ff66b2; /* Розовый цвет ссылки */
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.container-link a:hover {
+  text-decoration: underline;
+}

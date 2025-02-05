@@ -1,0 +1,63 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+  color: #333; /* Тёмный текст */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Стили формы */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для формы */
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Заголовок */
+h2 {
+  font-size: 2rem;
+  color: #ff3385; /* Розовый акцент */
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Лёгкая тень текста */
+}
+
+/* Список событий */
+ul {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #fff; /* Белый фон для элемента списка */
+  border: 1px solid #ff66b2; /* Розовая рамка */
+  border-radius: 10px; /* Закруглённые углы */
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #555; /* Тёмно-серый текст */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Эффект при наведении на элемент списка */
+li:hover {
+  transform: translateY(-5px); /* Поднимаем элемент */
+  background-color: #ffe6ee; /* Светлый розовый фон */
+}
+
+/* Общие стили для текста в списке */
+li span {
+  font-weight: bold;
+  color: #ff3385; /* Розовый цвет текста событий */
+}

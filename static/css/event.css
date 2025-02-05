@@ -1,0 +1,129 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 40px;
+}
+
+h2, h3 {
+  font-size: 28px;
+  color: #ff66b2; /* Розовый заголовков */
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+  color: #333; /* Темно-серый текст */
+  margin: 10px 0;
+  text-align: center;
+}
+
+strong {
+  font-weight: bold;
+  color: #333; /* Темный текст для выделений */
+}
+
+/* Стили для кнопок */
+button {
+  background-color: #ff66b2; /* Розовая кнопка */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+  width: 180px;
+}
+
+button:hover {
+  background-color: #ff3385; /* Темно-розовый при наведении */
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Стили для форм */
+input[type="text"], input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #f5b2d1; /* Легкая розовая рамка */
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+  border-color: #ff66b2; /* Розовый акцент при фокусе */
+  background-color: #fff;
+  outline: none;
+}
+
+/* Скрытые формы */
+div {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+div.active {
+  display: block;
+}
+
+label {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 6px;
+  display: block;
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 16px;
+  color: #333;
+  margin: 10px 0;
+}
+
+/* Стили для уведомлений */
+.alert {
+  background-color: #ff66b2;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.alert.success {
+  background-color: #4CAF50;
+}
+
+.alert.error {
+  background-color: #f44336;
+}

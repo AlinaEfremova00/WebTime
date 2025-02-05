@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Присоединение к группе</title>
+    <style>
+        /* Общие стили */
+        .container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-menu">
+        <div>
+            <a href="/groups">← Назад к группам</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Присоединиться к группе</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="group_id">ID группы:</label>
+                <input
+                    type="number"
+                    id="group_id"
+                    name="group_id"
+                    placeholder="Введите ID группы"
+                    required
+                >
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить запрос</button>
+        </form>
+    </div>
+</body>
+</html>

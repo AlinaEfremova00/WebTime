@@ -1,0 +1,75 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/* Заголовок страницы */
+h2 {
+  font-size: 2rem;
+  color: #ff66b2; /* Розовый цвет для заголовка */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Список уведомлений */
+ul {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+li {
+  background-color: #fff; /* Белый фон для элементов списка */
+  border: 1px solid #f5b2d1; /* Легкий розовый цвет для рамки */
+  border-radius: 8px; /* Скругленные углы */
+  padding: 12px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #333; /* Темно-серый цвет текста */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+}
+
+li a {
+  color: #ff66b2; /* Розовый для ссылки на отметку как прочитанное */
+  text-decoration: none;
+}
+
+li a:hover {
+  color: #ff3385; /* Темно-розовый при наведении */
+}
+
+/* Стилизуем блок с сообщением, если нет уведомлений */
+p {
+  color: #777; /* Лёгкий серый цвет для пустого сообщения */
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Ссылка для возвращения в профиль */
+a {
+  font-size: 1rem;
+  color: #ff66b2; /* Розовый для ссылки */
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+a:hover {
+  color: #ff3385; /* Темно-розовый при наведении */
+  text-decoration: underline;
+}

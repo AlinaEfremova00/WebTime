@@ -1,0 +1,65 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fbe8f7; /* Светлый розовый фон */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Стили формы */
+form {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Контейнер для содержимого формы */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Стили сообщения об успешной регистрации */
+.success-message {
+  font-size: 16px;
+  font-weight: bold;
+  color: #28a745; /* Зеленый цвет текста (успех) */
+  background-color: #e6f9eb; /* Светлый зеленый фон для успеха */
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #34d058; /* Зеленая рамка */
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 20px 0; /* Отступ внизу */
+}
+
+/* Ссылка для перехода */
+.redirect-link a {
+  font-size: 14px;
+  color: #ff3385; /* Розовый цвет текста ссылки */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+  border: 2px solid #ff66b2; /* Розовая рамка */
+  border-radius: 8px;
+  background-color: #ffe6ee; /* Светлый розовый фон */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover-эффект для ссылки */
+.redirect-link a:hover {
+  color: #fff;
+  background-color: #ff66b2; /* Ярко-розовый фон */
+  border-color: #ff3385; /* Яркая рамка */
+}

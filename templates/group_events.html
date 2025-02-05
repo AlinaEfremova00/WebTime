@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>События группы</title>
+    <style>
+        .event-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .event-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-menu">
+        <div>
+            <a href="/groups">← Назад к группам</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h2>События группы: {{ group.name }}</h2>
+            <a href="/add_event?group_id={{ group.id }}" class="btn btn-primary">Добавить событие</a>
+        </div>
+
+        <ul class="event-list">
+            {% for event in events %}
+            <li class="event-item">
+                <div class="event-header">
+                    <h3>{{ event.name }}</h3>
+                    <span>{{ event.date.strftime('%d.%m.%Y') }}</span>
+                </div>
+                <p>{{ event.description }}</p>
+            </li>
+            {% else %}
+            <p>В этой группе пока нет событий.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

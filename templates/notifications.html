@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уведомления</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Навигационное меню */
+        .nav-menu {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            margin-right: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: #007BFF;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Список уведомлений */
+        .notification-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notification-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+        }
+
+        .notification-content {
+            flex-grow: 1;
+            margin-right: 1.5rem;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Кнопки */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #007BFF;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Пустой список */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Иконка колокольчика */
+        .bell-icon {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационное меню -->
+    <div class="nav-menu">
+        <div>
+            <a href="/calendar">Календарь</a>
+            <a href="/profile">Профиль</a>
+            <a href="/notifications">Уведомления</a>
+        </div>
+        <div>
+            <a href="/logout">Выйти</a>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <h2>
+            <svg class="bell-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            Ваши уведомления
+        </h2>
+
+        {% if notifications %}
+            <ul class="notification-list">
+                {% for notification in notifications %}
+                    <li class="notification-item">
+                        <div class="notification-content">
+                            {{ notification[1] }}
+                            <div class="notification-time">
+                                <small>{{ notification[2]}}</small>
+                            </div>
+                        </div>
+                        <div class="notification-actions">
+                            <a href="/mark_read/{{ notification[0] }}" class="btn btn-primary">
+                                Прочитано
+                            </a>
+                            {% if notification[3] == 'invite' %}
+                                <button class="btn btn-secondary"
+                                        onclick="handleInvite('{{ notification[4] }}', true)">
+                                    Принять
+                                </button>
+                                <button class="btn btn-secondary"
+                                        onclick="handleInvite('{{ notification[4] }}', false)">
+                                    Отклонить
+                                </button>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="/mark_all_read" class="btn btn-primary">
+                    Пометить все как прочитанные
+                </a>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>У вас нет новых уведомлений</p>
+                <div style="margin-top: 1rem;">
+                    <a href="/profile" class="btn btn-secondary">Вернуться в профиль</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function handleInvite(inviteId, accept) {
+            fetch('/api/handle_invite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    invite_id: inviteId,
+                    accept: accept
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(accept ? "Приглашение принято!" : "Приглашение отклонено");
+                    location.reload();
+                } else {
+                    alert("Ошибка: " + data.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
