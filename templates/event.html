@@ -10,10 +10,10 @@
     <p><strong>Создатель:</strong> {{ event.creator }}</p>
 
     {% if user == event.creator %}
-        <button id="editEventBtn">✏ Редактировать</button>
-        <button id="deleteEventBtn">❌ Удалить</button>
+        <button id="editEventBtn">Редактировать</button>
+        <button id="deleteEventBtn">Удалить</button>
 
-        <!-- 🔥 Форма редактирования -->
+        <!-- Форма редактирования -->
         <div id="editForm" style="display: none;">
             <h3>Редактирование события</h3>
             <label>Название:</label>
@@ -22,14 +22,14 @@
             <label>Дата:</label>
             <input type="date" id="editEventDate" value="{{ event.date }}">
 
-            <button id="saveEditBtn">💾 Сохранить</button>
+            <button id="saveEditBtn">Сохранить</button>
         </div>
 
     {% else %}
-        <button id="requestEditBtn">📩 Запросить редактирование</button>
-        <button id="requestDeleteBtn">🚨 Запросить удаление</button>
+        <button id="requestEditBtn">Запросить редактирование</button>
+        <button id="requestDeleteBtn">Запросить удаление</button>
 
-        <!-- 🔥 Форма запроса редактирования -->
+        <!-- Форма запроса редактирования -->
         <div id="requestEditForm" style="display: none;">
             <h3>Запрос на редактирование</h3>
             <label>Новое название:</label>
@@ -38,7 +38,7 @@
             <label>Новая дата:</label>
             <input type="date" id="requestEditEventDate">
 
-            <button id="sendEditRequestBtn">📩 Отправить запрос</button>
+            <button id="sendEditRequestBtn">Отправить запрос</button>
         </div>
     {% endif %}
 
@@ -47,12 +47,12 @@
         const user = "{{ user }}";
         const eventCreator = "{{ event.creator }}";
 
-        // ✅ Открытие формы редактирования
+        // Открытие формы редактирования
         document.getElementById('editEventBtn')?.addEventListener('click', function() {
             document.getElementById('editForm').style.display = 'block';
         });
 
-        // ✅ Сохранение редактирования
+        // Сохранение редактирования
         document.getElementById('saveEditBtn')?.addEventListener('click', function() {
             const newName = document.getElementById('editEventName').value;
             const newDate = document.getElementById('editEventDate').value;
@@ -65,20 +65,20 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("✅ Изменения сохранены!");
+                    alert("Изменения сохранены!");
                     location.reload();
                 } else {
-                    alert("❌ Ошибка: " + data.message);
+                    alert("Ошибка: " + data.message);
                 }
             });
         });
 
-        // ✅ Открытие формы запроса редактирования
+        // Открытие формы запроса редактирования
         document.getElementById('requestEditBtn')?.addEventListener('click', function() {
             document.getElementById('requestEditForm').style.display = 'block';
         });
 
-        // ✅ Отправка запроса на редактирование
+        // Отправка запроса на редактирование
         document.getElementById('sendEditRequestBtn')?.addEventListener('click', function() {
             const newName = document.getElementById('requestEditEventName').value;
             const newDate = document.getElementById('requestEditEventDate').value;
@@ -91,15 +91,15 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("✅ Запрос отправлен!");
+                    alert("Запрос отправлен!");
                     location.reload();
                 } else {
-                    alert("❌ Ошибка: " + data.message);
+                    alert("Ошибка: " + data.message);
                 }
             });
         });
 
-        // ✅ Удаление события
+        //Удаление события
         document.getElementById('deleteEventBtn')?.addEventListener('click', function() {
             if (confirm("Вы уверены, что хотите удалить это событие?")) {
                 fetch('/api/delete_event', {
@@ -110,16 +110,16 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert("✅ Событие удалено!");
+                        alert("Событие удалено!");
                         window.location.href = "/profile";
                     } else {
-                        alert("❌ Ошибка: " + data.message);
+                        alert(" Ошибка: " + data.message);
                     }
                 });
             }
         });
 
-        // ✅ Запрос на удаление
+        // Запрос на удаление
         document.getElementById('requestDeleteBtn')?.addEventListener('click', function() {
             if (confirm("Вы уверены, что хотите запросить удаление этого события?")) {
                 fetch('/api/request_delete_event', {
@@ -130,9 +130,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert("✅ Запрос на удаление отправлен!");
+                        alert(" Запрос на удаление отправлен!");
                     } else {
-                        alert("❌ Ошибка: " + data.message);
+                        alert("Ошибка: " + data.message);
                     }
                 });
             }

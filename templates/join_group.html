@@ -6,10 +6,50 @@
     <title>Присоединение к группе</title>
     <style>
         /* Общие стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .nav-menu {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            margin-right: 1.5rem;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: #007BFF;
+        }
+
         .container {
             max-width: 500px;
             margin: 2rem auto;
             padding: 20px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .form-group {
@@ -27,12 +67,17 @@
             padding: 0.8rem;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
-            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007BFF;
         }
 
         .btn {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             margin-top: 1rem;
         }
     </style>
@@ -42,23 +87,29 @@
         <div>
             <a href="/groups">← Назад к группам</a>
         </div>
+        <div>
+            <a href="/profile">Профиль</a>
+            <a href="/logout">Выйти</a>
+        </div>
     </div>
 
     <div class="container">
-        <h2>Присоединиться к группе</h2>
-        <form method="POST">
-            <div class="form-group">
-                <label for="group_id">ID группы:</label>
-                <input
-                    type="number"
-                    id="group_id"
-                    name="group_id"
-                    placeholder="Введите ID группы"
-                    required
-                >
-            </div>
-            <button type="submit" class="btn btn-primary">Отправить запрос</button>
-        </form>
+        <div class="form-container">
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Присоединиться к группе</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="group_name">Имя группы:</label>
+                    <input
+                        type="text"
+                        id="group_name"
+                        name="group_name"
+                        placeholder="Введите имя группы"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить запрос</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

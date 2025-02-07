@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 });
 
-// ✅ Функция открытия модального окна
+// Функция открытия модального окна
 function openModal(modalId, date = null) {
     const modal = document.getElementById(modalId);
     const overlay = document.getElementById('modalOverlay');
@@ -37,7 +37,7 @@ function openModal(modalId, date = null) {
     }
 }
 
-// ✅ Функция закрытия модального окна
+// Функция закрытия модального окна
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     const overlay = document.getElementById('modalOverlay');
@@ -48,7 +48,7 @@ function closeModal(modalId) {
     }
 }
 
-// ✅ Отправка запроса на редактирование
+// Отправка запроса на редактирование
 function sendEditRequest(eventId) {
     const newEventName = prompt("Введите новое название события:");
     if (!newEventName) return;
@@ -64,15 +64,15 @@ function sendEditRequest(eventId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("✅ Запрос на редактирование отправлен!");
+            alert("Запрос на редактирование отправлен!");
         } else {
-            alert("❌ Ошибка: " + data.message);
+            alert("Ошибка: " + data.message);
         }
     })
     .catch(error => console.error("Ошибка при отправке запроса:", error));
 }
 
-// ✅ Отправка запроса на удаление
+//Отправка запроса на удаление
 function sendDeleteRequest(eventId) {
     fetch('/api/request_delete_event', {
         method: 'POST',
@@ -82,27 +82,27 @@ function sendDeleteRequest(eventId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("✅ Запрос на удаление отправлен!");
+            alert("Запрос на удаление отправлен!");
         } else {
-            alert("❌ Ошибка: " + data.message);
+            alert("Ошибка: " + data.message);
         }
     })
     .catch(error => console.error("Ошибка при отправке запроса:", error));
 }
 
 function openEditModal(event) {
-    document.getElementById('editEventId').value = event.id;  // 👀 Устанавливаем event_id
+    document.getElementById('editEventId').value = event.id;
     document.getElementById('editEventName').value = event.title;
     document.getElementById('editEventDate').value = event.start.toISOString().split('T')[0];
 
     openModal('editEventModal');
 }
 
-// ✅ Обработка формы добавления события
+//Обработка формы добавления события
 document.getElementById('eventForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!currentUser) {
-        alert("❌ Вы не вошли в аккаунт!");
+        alert("Вы не вошли в аккаунт!");
         return;
     }
 
@@ -119,18 +119,18 @@ document.getElementById('eventForm')?.addEventListener('submit', function (e) {
             closeModal('eventModal');
             location.reload();
         } else {
-            alert('❌ Ошибка: ' + data.message);
+            alert('Ошибка: ' + data.message);
         }
     })
     .catch(error => console.error('Ошибка при добавлении события:', error));
 });
 
-// ✅ Обработка редактирования события
+// Обработка редактирования события
 document.getElementById('editEventForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const formData = new FormData(this);
-    console.log("📤 Данные перед отправкой:", Object.fromEntries(formData));
+    console.log("Данные перед отправкой:", Object.fromEntries(formData));
 
     fetch('/api/edit_event', {
         method: 'POST',
@@ -140,7 +140,7 @@ document.getElementById('editEventForm')?.addEventListener('submit', function (e
     .then(data => {
         if (data.success) {
             closeModal('editEventModal');
-            console.log("✅ Успешно отправлено!");
+            console.log("Успешно отправлено!");
         } else {
             alert('Ошибка при редактировании события: ' + data.message);
         }
@@ -149,12 +149,12 @@ document.getElementById('editEventForm')?.addEventListener('submit', function (e
 });
 
 
-// ✅ Обработка удаления события
+// Обработка удаления события
 document.getElementById('deleteEventBtn')?.addEventListener('click', function () {
     const eventId = document.getElementById('editEventId').value;
 
     if (!eventId) {
-        alert("❌ Ошибка: событие не выбрано!");
+        alert("Ошибка: событие не выбрано!");
         return;
     }
 
@@ -170,17 +170,17 @@ document.getElementById('deleteEventBtn')?.addEventListener('click', function ()
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("✅ Событие успешно удалено!");
+            alert("Событие успешно удалено!");
             closeModal('editEventModal');
             location.reload();
         } else {
-            alert("❌ Ошибка: " + data.message);
+            alert("Ошибка: " + data.message);
         }
     })
     .catch(error => console.error('Ошибка при удалении события:', error));
 });
 
-// ✅ Запрос на редактирование
+// Запрос на редактирование
 document.getElementById("requestEditBtn")?.addEventListener("click", function () {
     const eventId = document.getElementById("editEventId").value;
     const newEventName = document.getElementById("editEventName").value;
@@ -193,10 +193,10 @@ document.getElementById("requestEditBtn")?.addEventListener("click", function ()
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("✅ Запрос на редактирование отправлен!");
+            alert("Запрос на редактирование отправлен!");
             closeModal("editEventModal");
         } else {
-            alert("❌ Ошибка: " + data.message);
+            alert("Ошибка: " + data.message);
         }
     })
     .catch(error => console.error("Ошибка при запросе редактирования:", error));

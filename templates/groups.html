@@ -45,6 +45,13 @@
             padding: 20px;
         }
 
+        h2 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Список групп */
         .group-list {
             list-style: none;
             padding: 0;
@@ -56,6 +63,11 @@
             margin-bottom: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .group-item:hover {
+            transform: translateY(-2px);
         }
 
         .group-header {
@@ -71,12 +83,13 @@
         }
 
         .btn {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .btn-primary {
@@ -86,6 +99,14 @@
 
         .btn-primary:hover {
             background: #0056b3;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -103,24 +124,34 @@
 
     <div class="container">
         <h2>Ваши группы</h2>
-        <a href="/create_group" class="btn btn-primary">Создать новую группу</a>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="/create_group" class="btn btn-primary">Создать новую группу</a>
+        </div>
 
-        <ul class="group-list">
-            {% for group in groups %}
-            <li class="group-item">
-                <div class="group-header">
-                    <h3>{{ group.name }}</h3>
-                    <div class="group-actions">
-                        <a href="/group/{{ group.id }}" class="btn btn-primary">События</a>
-                        <button class="btn btn-primary">Участники</button>
+        {% if groups %}
+            <ul class="group-list">
+                {% for group in groups %}
+                <li class="group-item">
+                    <div class="group-header">
+                        <div>
+                            <h3 style="margin: 0;">{{ group.name }}</h3>
+                            <small>Создана: {{ group.created_at.strftime('%d.%m.%Y') }}</small>
+                        </div>
+                        <div class="group-actions">
+                            <a href="/group/{{ group.id }}" class="btn btn-primary">События</a>
+                        </div>
                     </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-state">
+                <p>Вы пока не состоите ни в одной группе</p>
+                <div style="margin-top: 1rem;">
+                    <a href="/join_group" class="btn btn-primary">Присоединиться к группе</a>
                 </div>
-                <p>Создана: {{ group.created_at.strftime('%d.%m.%Y') }}</p>
-            </li>
-            {% else %}
-            <p>Вы пока не состоите ни в одной группе.</p>
-            {% endfor %}
-        </ul>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>

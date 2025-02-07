@@ -3,15 +3,15 @@ import sqlite3
 import bcrypt
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # 🔑 Ключ для хранения сессий
+app.secret_key = 'supersecretkey'
 
 
-# ✅ Функция подключения к БД
+# Функция подключения к БД
 def connect_db():
     return sqlite3.connect('main.db', check_same_thread=False)
 
 
-# ✅ Авторизация (запоминаем пользователя в сессии)
+# Авторизация (запоминаем пользователя в сессии)
 @app.route('/authorization', methods=['GET', 'POST'])
 def form_authorization():
     if request.method == 'POST':
@@ -24,7 +24,7 @@ def form_authorization():
             result = cursor_db.fetchone()
 
         if result and bcrypt.checkpw(Password.encode('utf-8'), result[0]):
-            session['user'] = Login  # 🔥 Сохраняем логин в сессии
+            session['user'] = Login  # Сохраняем логин в сессии
             return redirect(url_for('profile'))  # Перенаправляем в личный кабинет
         else:
             return render_template('auth_bad.html')
@@ -32,7 +32,7 @@ def form_authorization():
     return render_template('authorization.html')
 
 
-# ✅ Регистрация (сразу авторизуем пользователя)
+# Регистрация (сразу авторизуем пользователя)
 @app.route('/registration', methods=['GET', 'POST'])
 def form_registration():
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def form_registration():
                 cursor_db.execute("INSERT INTO passwords VALUES (?, ?)", (Login, hashed_password))
                 db_lp.commit()
 
-            session['user'] = Login  # 🔥 Авторизуем пользователя сразу после регистрации
+            session['user'] = Login  # Авторизуем пользователя сразу после регистрации
             return redirect(url_for('profile'))
 
         except sqlite3.IntegrityError:
@@ -56,7 +56,7 @@ def form_registration():
     return render_template('registration.html')
 
 
-# ✅ Личный кабинет
+# Личный кабинет
 @app.route('/profile')
 def profile():
     if 'user' not in session:
@@ -87,7 +87,7 @@ def profile():
     return render_template('profile.html', user=user, groups=groups, requests=requests)
 
 
-# ✅ Выход из аккаунта
+# Выход из аккаунта
 @app.route('/logout')
 def logout():
     session.pop('user', None)
@@ -113,16 +113,31 @@ def create_group():
 @app.route('/join_group', methods=['GET', 'POST'])
 def join_group():
     if request.method == 'POST':
-        group_id = request.form.get('group_id')
-        login = request.form.get('login')  # Здесь нужно передать логин текущего пользователя
-
+        group_name = request.form.get('group_name')
+        login = session['user']  # Текущий пользователь
         try:
             with sqlite3.connect('main.db') as db_lp:
                 cursor_db = db_lp.cursor()
-                cursor_db.execute("INSERT INTO group_members (login, group_id) VALUES (?, ?)", (login, group_id))
+                # Сначала получаем id группы по её названию
+                cursor_db.execute("SELECT group_id FROM groups WHERE group_name = ?", (group_name,))
+                result = cursor_db.fetchone()
+                if result is None:
+                    return "Группа с таким названием не найдена."
+
+                group_id = result[0]
+
+                # Затем вставляем запись о присоединении пользователя к группе
+                cursor_db.execute(
+                    "INSERT INTO group_members (login, group_id) VALUES (?, ?)",
+                    (login, group_id)
+                )
+                db_lp.commit()  # Явное подтверждение транзакции (хотя with-контекст может сделать это сам)
             return "Вы успешно присоединились к группе!"
         except sqlite3.IntegrityError:
-            return "Вы уже состоите в этой группе или группа не существует."
+            return "Вы уже состоите в этой группе или произошла ошибка с данными."
+        except Exception as e:
+            # Для отладки можно вывести ошибку, но в production лучше логировать её
+            return f"Произошла непредвиденная ошибка: {e}"
 
     return render_template('join_group.html')
 
@@ -135,10 +150,10 @@ def edit_event():
     event_name = data.get('event_name')
     event_date = data.get('event_date')
 
-    print(f"🔄 Запрос на редактирование: {event_id} → {event_name} ({event_date})")
+    print(f"Запрос на редактирование: {event_id} → {event_name} ({event_date})")
 
     try:
-        print(f"🔄 Данные для обновления: event_id={event_id}, event_name={event_name}, event_date={event_date}")
+        print(f"Данные для обновления: event_id={event_id}, event_name={event_name}, event_date={event_date}")
         with sqlite3.connect('main.db') as db_lp:
             cursor_db = db_lp.cursor()
             cursor_db.execute(
@@ -146,11 +161,11 @@ def edit_event():
                 (event_name, event_date, event_id)
             )
             db_lp.commit()
-            print("✅ Коммит выполнен!")
-        print("✅ Успешно изменено!")
+            print("Коммит выполнен!")
+        print("Успешно изменено!")
         return jsonify({"success": True})
     except Exception as e:
-        print(f"❌ Ошибка: {e}")
+        print(f" Ошибка: {e}")
         return jsonify({"success": False, "message": str(e)})
 
 
@@ -176,7 +191,7 @@ def api_events(group_id):
             "id": event[0],
             "title": event[1],
             "start": event[2],
-            "created_by": event[3] if event[3] else "Неизвестный",  # 👤 Добавляем проверку
+            "created_by": event[3] if event[3] else "Неизвестный",
             "event_type": event[4],
             "color": "#ff6666" if event[4] == "personal" else "#66b3ff"
         }
@@ -198,7 +213,7 @@ def home():
 @app.route('/calendar/<int:group_id>')
 def group_calendar(group_id):
     if 'user' not in session:
-        return redirect(url_for('form_authorization'))  # 🔥 Если не авторизован – на страницу входа
+        return redirect(url_for('form_authorization'))
 
     user = session['user']
 
@@ -208,7 +223,7 @@ def group_calendar(group_id):
         is_member = cursor_db.fetchone()
 
     if not is_member:
-        return "⛔ У вас нет доступа к этой группе!", 403  # 🔥 Ошибка доступа
+        return "У вас нет доступа к этой группе!", 403
 
     return render_template('calendar.html', group_id=group_id)
 
@@ -216,8 +231,8 @@ def group_calendar(group_id):
 @app.route('/add_event_ajax', methods=['POST'])
 def add_event_ajax():
     if 'user' not in session:
-        print("⚠️ Запрос без авторизации! (только для теста)")
-        session['user'] = 'test_user'  # 👈 Временный тестовый логин
+        print("Запрос без авторизации! (только для теста)")
+        session['user'] = 'test_user'
 
     event_name = request.form.get('event_name')
     event_date = request.form.get('event_date')
@@ -233,10 +248,10 @@ def add_event_ajax():
                 (group_id, event_name, event_date, created_by, event_type)
             )
             db_lp.commit()
-        print(f"✅ Добавлено событие: {event_name} ({event_date})")
+        print(f" Добавлено событие: {event_name} ({event_date})")
         return jsonify({"success": True})
     except Exception as e:
-        print(f"❌ Ошибка при добавлении: {e}")
+        print(f" Ошибка при добавлении: {e}")
         return jsonify({"success": False, "message": str(e)})
 
 
@@ -247,7 +262,7 @@ def delete_event():
 
     data = request.get_json()
     event_id = data.get('event_id')
-    deleter = session['user']  # 🔥 Кто удаляет событие
+    deleter = session['user']
 
     if not event_id:
         return jsonify({"success": False, "message": "Не указан ID события!"})
@@ -265,7 +280,7 @@ def delete_event():
 
             group_id, created_by, event_name, event_date, event_type = event_data
 
-            # 🔥 Проверяем, можно ли удалить событие
+            # Проверяем, можно ли удалить событие
             if deleter != created_by and event_type == "personal":
                 return jsonify({"success": False, "message": "Вы не можете удалить чужое личное событие!"})
 
@@ -275,17 +290,17 @@ def delete_event():
                 if not is_member:
                     return jsonify({"success": False, "message": "Вы не можете удалить это событие!"})
 
-            # 🔥 Удаляем событие
+            # Удаляем событие
             cursor_db.execute("DELETE FROM events WHERE event_id = ?", (event_id,))
 
-            # 🔥 Добавляем уведомления о удалении события
+            # Добавляем уведомления о удалении события
             if event_type == "group":
                 cursor_db.execute("SELECT login FROM group_members WHERE group_id = ? AND login != ?", (group_id, deleter))
                 users = cursor_db.fetchall()
                 for user in users:
                     cursor_db.execute(
                         "INSERT INTO notifications (user, message) VALUES (?, ?)",
-                        (user[0], f"❌ {deleter} удалил событие: {event_name} ({event_date})")
+                        (user[0], f"{deleter} удалил событие: {event_name} ({event_date})")
                     )
 
             db_lp.commit()
@@ -349,7 +364,7 @@ def mark_read(notification_id):
     return redirect(url_for('notifications'))
 
 
-# ✅ API: Запрос на редактирование
+# API: Запрос на редактирование
 @app.route('/api/request_edit_event', methods=['POST'])
 def request_edit_event():
     if 'user' not in session:
@@ -389,7 +404,7 @@ def request_edit_event():
     return jsonify({"success": True})
 
 
-# ✅ API: Запрос на удаление
+# API: Запрос на удаление
 @app.route('/api/request_delete_event', methods=['POST'])
 def request_delete_event():
     if 'user' not in session:
@@ -417,14 +432,14 @@ def request_delete_event():
     cursor.execute("""
         INSERT INTO notifications (user, message)
         VALUES (?, ?)
-    """, (creator, f"❌ {user} хочет удалить '{event_name}'"))
+    """, (creator, f" {user} хочет удалить '{event_name}'"))
 
     db.commit()
     db.close()
     return jsonify({"success": True, "message": "Запрос на удаление отправлен!"})
 
 
-# ✅ Получение списка запросов
+#  Получение списка запросов
 @app.route('/api/get_requests')
 def get_requests():
     if 'user' not in session:
@@ -456,7 +471,7 @@ def get_requests():
     return jsonify(requests_json)
 
 
-# ✅ Подтверждение запроса
+#  Подтверждение запроса
 @app.route('/api/approve_request', methods=['POST'])
 def approve_request():
     if 'user' not in session:
@@ -493,7 +508,7 @@ def approve_request():
     return jsonify({"success": True})
 
 
-# ✅ Отклонение запроса
+#  Отклонение запроса
 @app.route('/api/reject_request', methods=['POST'])
 def reject_request():
     if 'user' not in session:
